@@ -27,6 +27,9 @@ void generateRandomText(Map<string, Vector<char>> &data, string mostFrequent) {
   int k = mostFrequent.size();
   string result = mostFrequent;
   string currentChunk = mostFrequent;
+  // Here we just iterate over LENGTH - k times and randomly choosing next
+  // character (some values are duplicate in vector => more frequent one has
+  // more chance)
   for (int i = 0; i < LENGTH - k; i++) {
     if (data.containsKey(currentChunk) && !data[currentChunk].isEmpty()) {
       char nextChar =
@@ -39,14 +42,20 @@ void generateRandomText(Map<string, Vector<char>> &data, string mostFrequent) {
   }
   cout << result << endl;
 }
+
 string analyzeFile(ifstream &file, Map<string, Vector<char>> &data, int k) {
   cout << "ANALYZING..." << endl;
   string currentChunk = "";
+
+  // We need most frequent string to start with, so instead of iterating over
+  // again we can just find it here
   char c;
   string mostFrequent;
   int mostFrequentLength = 0;
   while (file.get(c)) {
     currentChunk += c;
+    // If current chunk is correct length we add next character to its vector &
+    // check for maximum length as it means its most frequent
     if (currentChunk.size() == k) {
       char nextChar = file.peek();
       if (!nextChar) {
@@ -79,6 +88,7 @@ int getMarkovModel() {
     cout << "Not valid number" << endl;
   }
 }
+
 ifstream openFile() {
   while (true) {
     string name = getLine("Enter file name: ");
