@@ -1,5 +1,5 @@
-PROGRAM = RandomGenerator
-OBJECTS = RandomGenerator.o
+PROGRAM = WordLadder
+OBJECTS = WordLadder.o
 
 CPPOPTIONS = -IStanfordCPPLib -fvisibility-inlines-hidden
 LDOPTIONS = -L.
@@ -7,11 +7,11 @@ LIB = -lStanfordCPPLib
 
 all: $(PROGRAM)
 
-RandomGenerator: $(OBJECTS)
+WordLadder: $(OBJECTS)
 	g++ -o $(PROGRAM) $(LDOPTIONS) $(OBJECTS) $(LIB)
 
-RandomGenerator.o: RandomGenerator.cpp Makefile libStanfordCPPLib.a
-	g++ -c $(CPPOPTIONS) RandomGenerator.cpp
+WordLadder.o: WordLadder.cpp Makefile libStanfordCPPLib.a
+	g++ -c $(CPPOPTIONS) WordLadder.cpp
 
 libStanfordCPPLib.a:
 	@rm -f libStanfordCPPLib.a

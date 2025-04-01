@@ -2,6 +2,7 @@
 #include "StanfordCPPLib/lexicon.h"
 #include "StanfordCPPLib/queue.h"
 #include "StanfordCPPLib/simpio.h"
+#include "StanfordCPPLib/strlib.h"
 #include "StanfordCPPLib/vector.h"
 #include <iostream>
 #include <string>
@@ -11,7 +12,6 @@ const int SENTINEL = -1;
 
 pair<string, string> getInput(Lexicon &);
 void findLadder(pair<string, string>, Lexicon &);
-string stringToLower(string);
 void printPath(Vector<string> &);
 string joinVector(Vector<string> &, string);
 void generateAllPossible(Vector<string> &, Queue<Vector<string>> &,
@@ -81,7 +81,7 @@ void generateAllPossible(Vector<string> &ladder, Queue<Vector<string>> &q,
   // generate all permutations which are 1 step ahead
   for (int i = 0; i < word.size(); i++) {
     for (char j = 'a'; j <= 'z'; j++) {
-      string newWord = stringToLower(word);
+      string newWord = toLowerCase(word);
       newWord[i] = j;
 
       // If we already viewed that no need to add again so we skip current
@@ -99,15 +99,6 @@ void generateAllPossible(Vector<string> &ladder, Queue<Vector<string>> &q,
   }
 }
 
-// Just a helper function to lowercase strings
-string stringToLower(string word) {
-  string lowerCase;
-  for (char c : word) {
-    lowerCase += tolower(c);
-  }
-  return lowerCase;
-}
-
 pair<string, string> getInput(Lexicon &wordlist) {
   pair<string, string> data;
   string startWord;
@@ -115,7 +106,7 @@ pair<string, string> getInput(Lexicon &wordlist) {
 
   // Here we get start word over and over till its valid
   while (true) {
-    startWord = stringToLower(
+    startWord = toLowerCase(
         getLine("Enter Start Word (" + to_string(SENTINEL) + " to quit): "));
     if (startWord == "-1") {
       return data;
@@ -128,7 +119,7 @@ pair<string, string> getInput(Lexicon &wordlist) {
 
   // Here we get destination word over and over till its valid
   while (true) {
-    destinationWord = stringToLower(getLine("Enter Destination Word: "));
+    destinationWord = toLowerCase(getLine("Enter Destination Word: "));
     if (wordlist.contains(destinationWord)) {
       break;
     }

@@ -31,14 +31,13 @@ void generateRandomText(Map<string, Vector<char>> &data, string mostFrequent) {
   // character (some values are duplicate in vector => more frequent one has
   // more chance)
   for (int i = 0; i < LENGTH - k; i++) {
-    if (data.containsKey(currentChunk) && !data[currentChunk].isEmpty()) {
-      char nextChar =
-          data[currentChunk][randomInteger(0, data[currentChunk].size() - 1)];
-      result += nextChar;
-      currentChunk = currentChunk.substr(1) + nextChar;
-    } else {
+    if (!data.containsKey(currentChunk) || data[currentChunk].isEmpty()) {
       break;
     }
+    char nextChar =
+        data[currentChunk][randomInteger(0, data[currentChunk].size() - 1)];
+    result += nextChar;
+    currentChunk = currentChunk.substr(1) + nextChar;
   }
   cout << result << endl;
 }
